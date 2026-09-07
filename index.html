@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Billshot — explain GitHub Actions minutes</title>
+  <meta name="description" content="Free client-side explainer for GitHub Actions usage. Minute rounding, OS multipliers, and what likely drove the bill. No account. No backend.">
+  <link rel="stylesheet" href="css/billshot.css">
+</head>
+<body>
+  <div class="wrap">
+    <header class="masthead">
+      <div>
+        <div class="kicker"><a href="https://28to3.me">28to3</a> · client-side · no account</div>
+        <h1 class="mark">Billshot</h1>
+      </div>
+      <div class="kicker">Estimate, not an invoice</div>
+    </header>
+
+    <p class="deck">
+      Paste a GitHub Actions usage report — or drop a billing screenshot and type the minutes you see.
+      Billshot stays in the browser and says, in plain English, how
+      <strong>minute rounding</strong>,
+      <strong>OS multipliers</strong>
+      (Linux 1× · Windows 2× · macOS 10×),
+      and the job mix likely produced the number finance is staring at.
+    </p>
+
+    <div class="layout">
+      <section class="panel" aria-labelledby="input-title">
+        <h2 id="input-title">Usage report</h2>
+        <p class="help">Job list with runner + duration, or a usage CSV with <code>sku</code> and <code>quantity</code>. Sample is fake data so the page demos without a login.</p>
+
+        <label class="field" for="report">Paste usage text</label>
+        <textarea id="report" spellcheck="false" placeholder="Workflow   Job   Runner   Duration&#10;CI         lint  ubuntu-latest  12s"></textarea>
+
+        <div class="row">
+          <button type="button" class="primary" id="sample">Load sample paste</button>
+          <button type="button" id="explain">Explain</button>
+          <button type="button" id="clear">Clear</button>
+        </div>
+
+        <div class="drop" id="drop" tabindex="0" role="button" aria-label="Drop a billing screenshot or usage file">
+          <strong>Optional screenshot</strong>
+          <p>Drop or paste a billing / usage image. v0 previews it; OCR is stubbed. Read Linux / Windows / macOS minutes from the picture and enter them below. CSV or .txt files load into the paste box.</p>
+          <input id="file" type="file" accept="image/*,.csv,.txt,.md">
+        </div>
+        <div class="preview-wrap" id="preview-wrap">
+          <img id="preview" alt="">
+          <p class="help" id="preview-caption"></p>
+          <button type="button" id="remove-image">Remove image</button>
+        </div>
+
+        <h2 style="margin-top:18px;font-size:18px;">Manual minutes</h2>
+        <p class="help">Use when parsing fails or you are reading a screenshot. Minutes here are <em>rounded wall minutes before the OS multiplier</em>.</p>
+        <div class="manual">
+          <div class="cell linux">
+            <span>Linux 1×</span>
+            <label class="field" for="linux-minutes">Rounded minutes</label>
+            <input id="linux-minutes" type="number" min="0" step="1" inputmode="numeric">
+            <label class="field" for="linux-jobs">or job count</label>
+            <input id="linux-jobs" type="number" min="0" step="1" inputmode="numeric">
+          </div>
+          <div class="cell windows">
+            <span>Windows 2×</span>
+            <label class="field" for="windows-minutes">Rounded minutes</label>
+            <input id="windows-minutes" type="number" min="0" step="1" inputmode="numeric">
+            <label class="field" for="windows-jobs">or job count</label>
+            <input id="windows-jobs" type="number" min="0" step="1" inputmode="numeric">
+          </div>
+          <div class="cell macos">
+            <span>macOS 10×</span>
+            <label class="field" for="macos-minutes">Rounded minutes</label>
+            <input id="macos-minutes" type="number" min="0" step="1" inputmode="numeric">
+            <label class="field" for="macos-jobs">or job count</label>
+            <input id="macos-jobs" type="number" min="0" step="1" inputmode="numeric">
+          </div>
+        </div>
+      </section>
+
+      <section class="stack" id="output" aria-live="polite" aria-labelledby="output-title">
+        <h2 id="output-title" class="hidden">Explanation</h2>
+      </section>
+    </div>
+
+    <footer class="cta">
+      Billshot is free, static, and stays on-device. No Stripe. No accounts.
+      For per-run Job Summaries, pin <a href="https://github.com/Sofa-Loaf/actionscope">Sofa-Loaf/actionscope@v0.1.3</a>.
+      Soft next steps on <a href="https://28to3.me">28to3.me</a>:
+      the $0.99 Minute Cheat Sheet, or a $49 Minute Teardown (one org, one week, one written artifact).
+    </footer>
+  </div>
+  <script src="js/engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
